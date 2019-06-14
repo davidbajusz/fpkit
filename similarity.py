@@ -26,6 +26,16 @@ def GetLen(aFP):
         length=len(aFP)
     elif datatype=="<class 'pandas.core.series.Series'>":
         length=len(aFP)
+    elif datatype=="<class 'cinfony.cdk.Fingerprint'>":
+        cdkFPlengths=np.array([881,1024,79,166,4860,307])
+        length=min(cdkFPlengths[cdkFPlengths <= aFP.fp.size()],key=lambda x:abs(x-aFP.fp.size()))
+        # Not the most elegant solution, but cdkMolecule.fp.length() gives highest occupied bit position, not length!
+    elif datatype=="<class 'cinfony.rdk.Fingerprint'>":
+        length=len(aFP.fp)
+    elif datatype=="<class 'rdkit.DataStructs.cDataStructs.LongSparseIntVect'>" or datatype=="<class 'rdkit.DataStructs.cDataStructs.IntSparseIntVect'>":
+        length=aFP.GetLength()
+    elif datatype=="<class 'cinfony.pybel.Fingerprint'>":
+        length=len(aFP.fp)
     
     return float(length)
     
@@ -52,6 +62,14 @@ def get_abcdp(aFP,bFP):
         aList=np.nonzero(aFP)
     elif datatype=="<class 'pandas.core.series.Series'>":
         aList=[i for i in aFP.index if aFP[i]!=0]
+    elif datatype=="<class 'cinfony.cdk.Fingerprint'>":
+        aList=aFP.bits
+    elif datatype=="<class 'cinfony.rdk.Fingerprint'>":
+        aList=aFP.bits
+    elif datatype=="<class 'rdkit.DataStructs.cDataStructs.LongSparseIntVect'>" or datatype=="<class 'rdkit.DataStructs.cDataStructs.IntSparseIntVect'>":
+        aList=aFP.GetNonzeroElements().keys()
+    elif datatype=="<class 'cinfony.pybel.Fingerprint'>":
+        aList=aFP.bits
 
     if datatype=="<type 'list'>" or datatype=="<class 'list'>":
         bList=[i for i,j in enumerate(bFP) if bFP[i]!=0]
@@ -59,6 +77,14 @@ def get_abcdp(aFP,bFP):
         bList=np.nonzero(bFP)
     elif datatype=="<class 'pandas.core.series.Series'>":
         bList=[i for i in bFP.index if bFP[i]!=0]
+    elif datatype=="<class 'cinfony.cdk.Fingerprint'>":
+        bList=bFP.bits
+    elif datatype=="<class 'cinfony.rdk.Fingerprint'>":
+        bList=bFP.bits
+    elif datatype=="<class 'rdkit.DataStructs.cDataStructs.LongSparseIntVect'>" or datatype=="<class 'rdkit.DataStructs.cDataStructs.IntSparseIntVect'>":
+        bList=bFP.GetNonzeroElements().keys()
+    elif datatype=="<class 'cinfony.pybel.Fingerprint'>":
+        bList=bFP.bits
 
     a=float(np.sum(np.in1d(aList,bList)))
     b=float(len(np.setdiff1d(aList,bList)))
