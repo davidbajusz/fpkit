@@ -34,6 +34,8 @@ def GetLen(aFP):
         length=len(aFP.fp)
     elif datatype=="<class 'rdkit.DataStructs.cDataStructs.LongSparseIntVect'>" or datatype=="<class 'rdkit.DataStructs.cDataStructs.IntSparseIntVect'>":
         length=aFP.GetLength()
+    elif datatype=="<class 'rdkit.DataStructs.cDataStructs.ExplicitBitVect'>" or datatype=="<class 'rdkit.DataStructs.cDataStructs.SparseBitVect'>":
+        length=aFP.GetNumBits()
     elif datatype=="<class 'cinfony.pybel.Fingerprint'>":
         length=len(aFP.fp)
     
@@ -70,6 +72,8 @@ def get_abcdp(aFP,bFP):
         aList=aFP.GetNonzeroElements().keys()
     elif datatype=="<class 'cinfony.pybel.Fingerprint'>":
         aList=aFP.bits
+    elif datatype=="<class 'rdkit.DataStructs.cDataStructs.ExplicitBitVect'>" or datatype=="<class 'rdkit.DataStructs.cDataStructs.SparseBitVect'>":
+        aList=[i for i in aFP.GetOnBits()]
 
     if datatype=="<type 'list'>" or datatype=="<class 'list'>":
         bList=[i for i,j in enumerate(bFP) if bFP[i]!=0]
@@ -85,6 +89,8 @@ def get_abcdp(aFP,bFP):
         bList=bFP.GetNonzeroElements().keys()
     elif datatype=="<class 'cinfony.pybel.Fingerprint'>":
         bList=bFP.bits
+    elif datatype=="<class 'rdkit.DataStructs.cDataStructs.ExplicitBitVect'>" or datatype=="<class 'rdkit.DataStructs.cDataStructs.SparseBitVect'>":
+        bList=[i for i in bFP.GetOnBits()]
 
     a=float(np.sum(np.in1d(aList,bList)))
     b=float(len(np.setdiff1d(aList,bList)))
