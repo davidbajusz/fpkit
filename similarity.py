@@ -18,8 +18,11 @@ class FPError(Exception):
 def GetLen(aFP):
     '''Collect getlength methods here and decide based on data type.
     '''
+
+    # Get type
     datatype=str(type(aFP))
     
+    # Calculate length by type
     if datatype=="<type 'list'>" or datatype=="<class 'list'>":
         length=len(aFP)
     elif datatype=="<class 'numpy.ndarray'>":
