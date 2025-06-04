@@ -1,7 +1,7 @@
 # FPKit
 FingerPrint Kit - Python-based cheminformatics package for fingerprint-related tasks.
 
-Support for molecular fingerprint types implemented in the [cinfony](http://cinfony.github.io/) cheminformatics toolkit was added in the current version.
+Support for molecular fingerprint types implemented in the [RDKit](https://github.com/rdkit/rdkit) and [cinfony](http://cinfony.github.io/) cheminformatics toolkits was added in the current version.
 
 # Installation
 Just place anywhere in your `PYTHONPATH`, or update your `PYTHONPATH` to include the `fpkit` folder.
