@@ -92,10 +92,12 @@ def get_abcdp(aFP,bFP):
     elif datatype=="<class 'rdkit.DataStructs.cDataStructs.ExplicitBitVect'>" or datatype=="<class 'rdkit.DataStructs.cDataStructs.SparseBitVect'>":
         bList=[i for i in bFP.GetOnBits()]
 
+    # Calculate a,b,c by set operations
     a=float(np.sum(np.in1d(aList,bList)))
     b=float(len(np.setdiff1d(aList,bList)))
     c=float(len(np.setdiff1d(bList,aList)))
     
+    # Calculate d from the rest
     d=p-a-b-c
     
     return [a,b,c,d,p]
